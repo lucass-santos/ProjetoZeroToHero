@@ -53,7 +53,7 @@ public class ProductServiceImpl implements ProductService{
     public Optional<ProductDTO> getById(Long id) {
         Optional<Product> product = repository.findById(id);
         /*
-        if(product.isEmpty()){
+        if(product.isPresent()){
             Product productEntity = product.get();
             ProductDTO response = mapper.map(productEntity, ProductDTO.class);
             return Optional.of(response);
@@ -64,5 +64,29 @@ public class ProductServiceImpl implements ProductService{
 
         return product.map(value -> mapper.map(value, ProductDTO.class));
     }
+
+    @Override
+    public boolean inactive(Long id) {
+        Optional<Product> product = repository.findById(id);
+        if(product.isPresent()){
+            product.get().setAvailable(false);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Optional<ProductDTO> update(Long id, ProductDTO request) {
+
+        Optional<Product> product = repository.findById(id);
+        if(product.isPresent()){
+            product.map(value -> mapper.map(request, Product.class));
+            ProductDTO response = mapper.map(product, ProductDTO.class);
+            return Optional.of(response);
+        }
+
+        return Optional.empty();
+    }
+
 
 }

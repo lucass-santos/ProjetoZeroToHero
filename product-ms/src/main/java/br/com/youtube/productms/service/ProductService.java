@@ -13,4 +13,10 @@ public interface ProductService {
     List<ProductDTO> getAll();
 
     Optional<ProductDTO> getById(Long id);
+
+    boolean inactive(Long id);
+
+    Optional<ProductDTO> update(Long id, ProductDTO request);
 }
+
+
