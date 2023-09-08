@@ -1,6 +1,7 @@
 package br.com.youtube.productms.controller;
 
 import br.com.youtube.productms.dto.ProductDTO;
+import br.com.youtube.productms.model.Product;
 import br.com.youtube.productms.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -27,6 +29,24 @@ public class ProductController {
         */
         return response.map(productDTO -> new ResponseEntity<>(response.get(), HttpStatus.CREATED))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProductDTO>> getAll(){
+        return ResponseEntity.ok(service.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDTO>getById(@PathVariable Long id){
+        Optional<ProductDTO> response = service.getById(id);
+        /*
+        if (response.isPresent()){
+            return  ResponseEntity.ok(response.get());
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        */
+        return response.map(productDTO -> ResponseEntity.ok(response.get()))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
 }
