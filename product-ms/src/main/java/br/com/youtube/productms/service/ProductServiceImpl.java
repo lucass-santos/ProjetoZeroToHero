@@ -80,9 +80,10 @@ public class ProductServiceImpl implements ProductService{
 
         Optional<Product> product = repository.findById(id);
         if(product.isPresent()){
-            product.map(value -> mapper.map(request, Product.class));
-            ProductDTO response = mapper.map(product, ProductDTO.class);
-            return Optional.of(response);
+            product.get().setDescription(request.getDescription());
+            product.get().setPrice(request.getPrice());
+            repository.save(product.get());
+            return Optional.of(mapper.map(product.get(), ProductDTO.class));
         }
 
         return Optional.empty();
