@@ -22,7 +22,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Optional<ProductDTO> create(ProductDTO request) {
-
+        request.setAvailable(true);
         Product product = mapper.map(request, Product.class);
         repository.saveAndFlush(product);
         ProductDTO response = mapper.map(product, ProductDTO.class);
@@ -43,8 +43,10 @@ public class ProductServiceImpl implements ProductService{
         */
 
         products.forEach(product -> {
-            ProductDTO response = mapper.map(product, ProductDTO.class);
-            responses.add(response);
+            if(product.isAvailable()) {
+                ProductDTO response = mapper.map(product, ProductDTO.class);
+                responses.add(response);
+            }
         });
         return responses;
     }
@@ -70,6 +72,7 @@ public class ProductServiceImpl implements ProductService{
         Optional<Product> product = repository.findById(id);
         if(product.isPresent()){
             product.get().setAvailable(false);
+            repository.save(product.get());
             return true;
         }
         return false;

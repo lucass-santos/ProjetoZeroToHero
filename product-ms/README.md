@@ -20,5 +20,5 @@
 
 ## Business Rules
 - Só é possível a criação de produtos com preço positivo;
-- Não é possívelpesquisar produtos que não estão disponíveis;
+- Não é possível pesquisar produtos que não estão disponíveis;
 - Não é possível inserir descrições com menos de 50 caracteres;
