@@ -14,5 +14,11 @@ public class ProductTemplateLoader implements TemplateLoader {
             add("description", "Sabonete líquido para uso nos cabelos que permite a higienização capilar retirando oleosidade, celulas mortas e renovando o fio.");
             add("price", random(Double.class, range(10.01, 21.99)));
         }});
+
+        Fixture.of(ProductDTO.class).addTemplate("valid2", new Rule(){{
+            add("name", random("Shampoo", "Shampoo low poo", "shampoo e condicionador"));
+            add("description", "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr.");
+            add("price", random(Double.class, range(10.01, 21.99)));
+        }});
     }
 }

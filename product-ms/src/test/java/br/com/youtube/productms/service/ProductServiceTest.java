@@ -71,4 +71,39 @@ public class ProductServiceTest {
 
     }
 
+    @Test
+    public void shouldUpdateProduct(){
+        ProductDTO request = Fixture.from(ProductDTO.class).gimme("valid");
+        Optional<ProductDTO> response = service.create(request);
+        System.out.println(response.toString());
+        Long id = response.get().getId();
+        System.out.println("---------------------------------------------------------------");
+
+        String newDescription = "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr";
+        double newPrice = 24.93;
+        request.setDescription(newDescription);
+        request.setPrice(newPrice);
+        Optional<ProductDTO> updatedProductDTO = service.update(id, request);
+        System.out.println(updatedProductDTO.toString());
+
+        assertNotNull(updatedProductDTO.get());
+        assertEquals(newDescription, updatedProductDTO.get().getDescription());
+        assertEquals(newPrice, updatedProductDTO.get().getPrice());
+    }
+
+
+    @Test
+    public void shouldInactivateProduct(){
+        ProductDTO request = Fixture.from(ProductDTO.class).gimme("valid");
+        Optional<ProductDTO> response = service.create(request);
+        System.out.println(response.toString());
+        Long id = response.get().getId();
+
+        boolean inactive = service.inactive(id);
+
+        assertTrue(inactive);
+
+        
+    }
+
 }
